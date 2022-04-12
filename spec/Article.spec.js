@@ -1,42 +1,57 @@
-const Article = require('../src/Article.js')
+const Article = require("../src/Article.js");
+const Author = require("../src/author.js");
 
 describe("Article", () => {
-  let article
+  let article;
+  let author;
   beforeEach(() => {
-    article = new Article('My Lovely Book')
-  })
+    author = new Author("Anica", 0766);
+    article = new Article("My Lovely Book", author);
+  });
 
-  describe('#constructor', () => {
-    it('has a title', () => {
-      expect(article.title).toEqual('My Lovely Book')
-    })
+  describe("#constructor", () => {
+    it("has a title", () => {
+      expect(article.title).toEqual("My Lovely Book");
+    });
 
-    it('is not on loan', () => {
-      expect(article.isOnLoan()).toEqual(false)
-    })
-  })
+    it("has a author name", () => {
+      expect(article.author.name).toEqual("Anica");
+    });
 
-  describe('#checkOut', () => {
-    it ('sets the article to be on loan', () => {
-      article.checkOut()
-      expect(article.isOnLoan()).toEqual(true)
-    })
+    it("has a publisher number", () => {
+      expect(article.author.publisherNumber).toEqual(0766);
+    });
 
-    it ('raises an error if the article is already on loan', () => {
-      article.checkOut()
-      expect(() => article.checkOut()).toThrowError('item is currently on loan')
-    })
-  })
+    it("is not on loan", () => {
+      expect(article.isOnLoan()).toEqual(false);
+    });
+  });
 
-  describe('#checkIn', () => {
-    it ('sets the article to not be on loan', () => {
-      article.checkOut()
-      article.checkIn()
-      expect(article.isOnLoan()).toEqual(false)
-    })
+  describe("#checkOut", () => {
+    it("sets the article to be on loan", () => {
+      article.checkOut();
+      expect(article.isOnLoan()).toEqual(true);
+    });
 
-    it ('raises an error if the article is not on loan', () => {
-      expect(() => article.checkIn()).toThrowError('item is not currently on loan')
-    })
-  })
-})
+    it("raises an error if the article is already on loan", () => {
+      article.checkOut();
+      expect(() => article.checkOut()).toThrowError(
+        "item is currently on loan"
+      );
+    });
+  });
+
+  describe("#checkIn", () => {
+    it("sets the article to not be on loan", () => {
+      article.checkOut();
+      article.checkIn();
+      expect(article.isOnLoan()).toEqual(false);
+    });
+
+    it("raises an error if the article is not on loan", () => {
+      expect(() => article.checkIn()).toThrowError(
+        "item is not currently on loan"
+      );
+    });
+  });
+});
